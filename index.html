@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIMZOT</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- Background Effect -->
+    <div id="particles"></div>
+
+    <!-- HUD -->
+    <div id="hud">
+      <div class="stat">
+        <div class="label">SCORE</div>
+        <span class="value" id="score">0</span>
+      </div>
+
+      <div class="stat">
+        <div class="label">ACCURACY</div>
+        <span class="value" id="accuracy">100</span>
+      </div>
+
+      <div class="stat">
+        <div class="label">TIME</div>
+        <span class="value" id="timer">30</span>
+      </div>
+
+      <div class="stat">
+        <div class="label">HIGH SCORE</div>
+        <span class="value" id="highScore">0</span>
+      </div>
+    </div>
+
+    <!-- Game Area -->
+    <div id="gameArea">
+      <div id="target">
+        <div class="outer"></div>
+
+        <div class="middle"></div>
+
+        <div class="center"></div>
+      </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="overlay">
+      <h1 class="logo">AIMZOT</h1>
+
+      <p class="subtitle">Test your aim. Beat your high score.</p>
+
+      <button id="startBtn">START GAME</button>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="gameOver" class="overlay hidden">
+      <div class="result-panel">
+        <h2>GAME OVER</h2>
+
+        <div class="result-stat">
+          Final Score:
+          <span id="finalScore">0</span>
+        </div>
+
+        <div class="result-stat">
+          Accuracy:
+          <span id="finalAccuracy">0</span>%
+        </div>
+
+        <button id="retryBtn">PLAY AGAIN</button>
+      </div>
+    </div>
+
+    <!-- Optional Sounds -->
+    <audio id="hitSound" src="assets/hit.wav"></audio>
+    <audio id="missSound" src="assets/miss.wav"></audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
