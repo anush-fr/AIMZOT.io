@@ -13,9 +13,20 @@ const startBtn = document.getElementById("startBtn");
 const retryBtn = document.getElementById("retryBtn");
 const finalScore = document.getElementById("finalScore");
 const finalAccuracy = document.getElementById("finalAccuracy");
-const hitSound = document.getElementById("hitSound");
-const missSound = document.getElementById("missSound");
 const gameArea = document.getElementById("gameArea");
+
+// ============================
+// WEB AUDIO SETUP
+// ============================
+
+var audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
 
 // ============================
 // GAME STATE
@@ -188,19 +199,49 @@ function flashScreen() {
 }
 
 // ============================
-// SOUNDS
+// SOUNDS (Web Audio API — no files needed)
 // ============================
 
 function playHit() {
-  if (!hitSound) return;
-  hitSound.currentTime = 0;
-  hitSound.play().catch(function () {});
+  try {
+    var ctx = getAudioContext();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(880, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.08);
+
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.15);
+  } catch (e) {}
 }
 
 function playMiss() {
-  if (!missSound) return;
-  missSound.currentTime = 0;
-  missSound.play().catch(function () {});
+  try {
+    var ctx = getAudioContext();
+    var osc = ctx.createOscillator();
+    var gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(300, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.15);
+
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.15);
+  } catch (e) {}
 }
 
 // ============================
